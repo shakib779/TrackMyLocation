@@ -1,0 +1,5 @@
+<root>
+    <item name='android.widget.Button'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>
