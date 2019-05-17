@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "422248345017",
+    "firebase_url": "https://trackmylocation-57c42.firebaseio.com",
+    "project_id": "trackmylocation-57c42",
+    "storage_bucket": "trackmylocation-57c42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422248345017:android:5390b49c0385c10e",
+        "android_client_info": {
+          "package_name": "com.example.shakib.track"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422248345017-8bick5ib32q98a92f4rn4cvm10cafs7m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shakib.track",
+            "certificate_hash": "8436fabae1d47cabadfad4397ecf5fb3d8c00418"
+          }
+        },
+        {
+          "client_id": "422248345017-et6uuuu9t28i9fo6dpcld8l24a39gqtt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtQs64PH5UC2UfdI1o-dCZNMXeSou66aI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422248345017-et6uuuu9t28i9fo6dpcld8l24a39gqtt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

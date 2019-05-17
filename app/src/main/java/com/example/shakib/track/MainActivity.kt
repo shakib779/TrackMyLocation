@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         val buttonMap = findViewById<Button>(R.id.button_map)
         val buttonGallery = findViewById<Button>(R.id.button_gallery)
 
@@ -40,26 +38,21 @@ class MainActivity : AppCompatActivity() {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
             buttonMap.setOnClickListener(View.OnClickListener {
-
                 if (ActivityCompat.checkSelfPermission(this@MainActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(this@MainActivity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ){
                     ActivityCompat.requestPermissions(this@MainActivity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
                     return@OnClickListener
                 }
-
-
                 fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
-
                 buttonMap.isEnabled = !buttonMap.isEnabled
-
             });
-
         }
 
-
-
         buttonGallery.setOnClickListener {
-            Toast.makeText(this@MainActivity, "You clicked Gallery.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@MainActivity, ShareActivity::class.java)
+            intent.putExtra("Longitude", "0.0")
+            intent.putExtra("Latitude", "0.0")
+            startActivity(intent)
         }
 
     }
@@ -77,7 +70,6 @@ class MainActivity : AppCompatActivity() {
         locationCallback = object :LocationCallback(){
             override fun onLocationResult(p0: LocationResult?)  {
                 var location = p0!!.locations.get(p0!!.locations.size-1)
-
                 val intent = Intent(this@MainActivity, MapsActivity::class.java)
                 intent.putExtra("Longitude", location.longitude.toString())
                 intent.putExtra("Latitude", location.latitude.toString())
