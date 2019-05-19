@@ -1,8 +1,8 @@
 # TrackMyLocation
 
-minSdkVersion 21
-targetSdkVersion 26
-versionName "1.0"
+Min Sdk Version 21
+Target Sdk Version 26
+Version Name "1.0"
 
 # Technology used
 
