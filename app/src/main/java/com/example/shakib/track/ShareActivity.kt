@@ -1,10 +1,8 @@
 package com.example.shakib.track
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -34,6 +32,9 @@ class ShareActivity : AppCompatActivity() {
     internal var storage: FirebaseStorage?=null
     internal var storageReference: StorageReference?=null
 
+    internal var database: FirebaseDatabase?=null
+    internal var databaseReference: DatabaseReference ?=null
+
     var lg:String = ""
     var lt:String = ""
 
@@ -52,6 +53,8 @@ class ShareActivity : AppCompatActivity() {
         btn!!.setOnClickListener {
             choosePhotoFromGallary()
         }
+
+
     }
 
     fun choosePhotoFromGallary() {
@@ -70,15 +73,40 @@ class ShareActivity : AppCompatActivity() {
                     Toast.makeText(this@ShareActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
                     imageview!!.setImageBitmap(bitmap)
 
-                    btnShare.setOnClickListener {
 
+                    /***
+                     *
+                     *
+                     *
+                     * Image share
+                     *
+                     */
+                    btnShare.setOnClickListener {
                         val imageReference = FirebaseStorage.getInstance().reference.child(lg + " " + lt)
                         imageReference.putFile(contentURI!!)
                                 .addOnSuccessListener { taskSnapshot ->
-                                    //Uri: taskSnapshot.downloadUrl
-                                    // Name: taskSnapshot.metadata!!.name
-                                    // Path: taskSnapshot.metadata!!.path
-                                    // Size: taskSnapshot.metadata!!.sizeBytes
+                                    val uri =  taskSnapshot.downloadUrl.toString()
+                                    //val Name =  taskSnapshot.metadata!!.name
+                                    //val Path = taskSnapshot.metadata!!.path
+                                    //val Size = taskSnapshot.metadata!!.sizeBytes
+
+                                    databaseReference = FirebaseDatabase.getInstance().getReference()
+                                    val kk = databaseReference!!.push().key
+                                    val dReference: DatabaseReference = databaseReference!!.child(kk)
+
+                                    val item = data()
+
+                                    item.longitude = lg
+                                    item.latitude = lt
+                                    item.url = uri
+
+                                    Log.d("longitude", item.longitude)
+                                    Log.d("latitude", item.latitude)
+                                    Log.d("IMAGE URL ", item.url)
+
+                                    dReference.setValue(item)
+
+
                                 }
                                 .addOnFailureListener { exception ->
                                     // Handle unsuccessful uploads
@@ -104,33 +132,26 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
+
+    /*****
+     * Function for Save image to internal storage "/Track" folder
+     */
     fun saveImage(myBitmap: Bitmap):String {
         val bytes = ByteArrayOutputStream()
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
         val wallpaperDirectory = File(
                 (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
-        // have the object build the directory structure, if needed.
-        Log.d("fee",wallpaperDirectory.toString())
-        if (!wallpaperDirectory.exists())
-        {
-
+        if (!wallpaperDirectory.exists()) {   /// if directory doesn't exists
             wallpaperDirectory.mkdirs()
         }
-
-        try
-        {
-            Log.d("heel",wallpaperDirectory.toString())
-            val f = File(wallpaperDirectory, ((Calendar.getInstance()
-                    .getTimeInMillis()).toString() + ".jpg"))
+        try {
+            val f = File(wallpaperDirectory, (lg + "_" + lt + "_" + (Calendar.getInstance().getTimeInMillis()).toString() + ".jpg"))
             f.createNewFile()
             val fo = FileOutputStream(f)
             fo.write(bytes.toByteArray())
-            MediaScannerConnection.scanFile(this,
-                    arrayOf(f.getPath()),
-                    arrayOf("image/jpeg"), null)
+            MediaScannerConnection.scanFile(this, arrayOf(f.getPath()), arrayOf("image/jpeg"), null)
             fo.close()
             Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
-
             return f.getAbsolutePath()
         }
         catch (e1: IOException) {

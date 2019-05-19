@@ -49,10 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonGallery.setOnClickListener {
-            val intent = Intent(this@MainActivity, ShareActivity::class.java)
-            intent.putExtra("Longitude", "0.0")
-            intent.putExtra("Latitude", "0.0")
-            startActivity(intent)
+            Toast.makeText(applicationContext, "Not done yet", Toast.LENGTH_SHORT).show()
         }
 
     }

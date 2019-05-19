@@ -60,7 +60,7 @@
                 android:resource="@xml/file_path" />
         </provider>
 
-        <activity android:name=".ShareActivity"></activity>
+        <activity android:name=".ShareActivity" />
     </application>
 
 </manifest>

@@ -69,6 +69,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+        buttonPlace.setOnClickListener{
+            Toast.makeText(applicationContext, "Not done yet", Toast.LENGTH_SHORT).show()
+        }
     }
 
     /**
