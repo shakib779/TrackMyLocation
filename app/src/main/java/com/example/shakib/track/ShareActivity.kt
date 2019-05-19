@@ -100,6 +100,11 @@ class ShareActivity : AppCompatActivity() {
                                     item.latitude = lt
                                     item.url = uri
 
+                                    /***
+                                     *
+                                     * Image Information with downloadURL
+                                     *
+                                     */
                                     Log.d("longitude", item.longitude)
                                     Log.d("latitude", item.latitude)
                                     Log.d("IMAGE URL ", item.url)
